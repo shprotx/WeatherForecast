@@ -20,7 +20,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 import ru.shprot.friendlyweather.data.WeatherModel
-import ru.shprot.friendlyweather.ui.screens.DialogSearch
+import ru.shprot.friendlyweather.ui.screens.JustDialogSearch
 import ru.shprot.friendlyweather.ui.screens.MainCard
 import ru.shprot.friendlyweather.ui.screens.TabLayout
 import ru.shprot.friendlyweather.ui.theme.FriendlyWeatherTheme
@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
                     "0",
                     "",
                 )) }
-                if (dialogState.value) DialogSearch(dialogState, onSubmit = {
+                if (dialogState.value) JustDialogSearch(dialogState, onSubmit = {
                     getData(it, this@MainActivity, daysList, currentDay)
                 })
                 getData("London", this, daysList, currentDay)
