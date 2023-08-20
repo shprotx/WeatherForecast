@@ -8,6 +8,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ru.shprot.friendlyweather.common.DataProvider
 import javax.inject.Singleton
 
 @Module
@@ -24,6 +25,12 @@ class Module {
     @Singleton
     fun provideEditor(application: Application): Editor {
         return providePrefs(application).edit()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDataProvider(): DataProvider {
+        return DataProvider()
     }
 
 }
