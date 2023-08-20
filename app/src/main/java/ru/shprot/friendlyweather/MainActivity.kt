@@ -18,14 +18,17 @@ import androidx.compose.ui.res.painterResource
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
+import ru.shprot.friendlyweather.common.apiKey
 import ru.shprot.friendlyweather.data.WeatherModel
 import ru.shprot.friendlyweather.ui.screens.JustDialogSearch
 import ru.shprot.friendlyweather.ui.screens.MainCard
 import ru.shprot.friendlyweather.ui.screens.TabLayout
 import ru.shprot.friendlyweather.ui.theme.FriendlyWeatherTheme
 
-const val apiKey = "4cdab9b5bdb242c48dd10518231908"
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
