@@ -9,7 +9,6 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 import ru.shprot.friendlyweather.data.WeatherModel
-import javax.inject.Inject
 
 class DataProvider {
 

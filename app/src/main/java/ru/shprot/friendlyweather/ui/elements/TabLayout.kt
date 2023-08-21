@@ -32,7 +32,12 @@ fun TabLayout(
     currentDay: MutableState<WeatherModel>
 ) {
     val tabList = listOf("HOURS", "DAYS")
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+        initialPageOffsetFraction = 0f
+    ) {
+        tabList.size
+    }
     val tabIndex = pagerState.currentPage
     val coroutineScope = rememberCoroutineScope()
 
@@ -70,10 +75,20 @@ fun TabLayout(
                 )
             }
         }
+//        HorizontalPager(
+//            pageCount = tabList.size,
+//            state = pagerState,
+//            modifier = Modifier.weight(1.0f)
+//        ) {index ->
+//            val list = when (index) {
+//                0 -> getWeatherByHours(currentDay.value.hours)
+//                1 -> daysList.value
+//                else -> daysList.value
+//            }
+//            MainList(list = list, currentDay)
+//        }
         HorizontalPager(
-            pageCount = tabList.size,
             state = pagerState,
-            modifier = Modifier.weight(1.0f)
         ) {index ->
             val list = when (index) {
                 0 -> getWeatherByHours(currentDay.value.hours)
@@ -81,6 +96,7 @@ fun TabLayout(
                 else -> daysList.value
             }
             MainList(list = list, currentDay)
+
         }
 
     }

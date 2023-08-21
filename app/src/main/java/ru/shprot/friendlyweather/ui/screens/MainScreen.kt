@@ -12,35 +12,32 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import ru.shprot.friendlyweather.R
 import ru.shprot.friendlyweather.common.DataProvider
-import ru.shprot.friendlyweather.data.WeatherModel
 import ru.shprot.friendlyweather.ui.elements.MainCard
 import ru.shprot.friendlyweather.ui.elements.TabLayout
+import ru.shprot.friendlyweather.viewModel.MainViewModel
 
 
 @Composable
 fun MainScreen(
     context: Context,
-    dataProvider: DataProvider
+    dataProvider: DataProvider,
+    viewModel: MainViewModel
 ) {
-    val daysList = remember { mutableStateOf(listOf<WeatherModel>()) }
     val dialogState = remember { mutableStateOf(false) }
 
-    val currentDay = remember { mutableStateOf(
-        WeatherModel(
-        "",
-        "",
-        "0",
-        "",
-        "",
-        "0",
-        "0",
-        "",
-    )
-    ) }
     if (dialogState.value) JustDialogSearch(dialogState, onSubmit = {
-        dataProvider.getData(it, context, daysList, currentDay)
+        dataProvider.getData(
+            it,
+            context,
+            viewModel.daysList,
+            viewModel.currentDay)
     })
-    dataProvider.getData("London", context, daysList, currentDay)
+
+    dataProvider.getData(
+        viewModel.selectedCity.value,
+        context,
+        viewModel.daysList,
+        viewModel.currentDay)
 
     Image(
         painter = painterResource(id = R.drawable.sky_bg),
@@ -50,14 +47,20 @@ fun MainScreen(
     )
     Column {
         MainCard(
-            currentDay,
+            viewModel.currentDay,
             onClickSync = {
-                dataProvider.getData("London", context, daysList, currentDay)
+                dataProvider.getData(
+                    viewModel.selectedCity.value,
+                    context, viewModel.daysList,
+                    viewModel.currentDay)
             },
             onClickSearch = {
                 dialogState.value = true
             })
-        TabLayout(daysList, currentDay)
+        TabLayout(
+            viewModel.daysList,
+            viewModel.currentDay
+        )
     }
 }
 

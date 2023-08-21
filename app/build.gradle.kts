@@ -63,16 +63,20 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     // ------
-
+    implementation("com.google.accompanist:accompanist-permissions:0.33.0-alpha")
     implementation("io.coil-kt:coil-compose:2.2.2")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
     implementation("com.android.volley:volley:1.2.1")
     implementation("com.google.dagger:hilt-android:2.47")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     add("kapt","com.google.dagger:hilt-compiler:2.44")
+    implementation("androidx.navigation:navigation-compose:2.6.0")
 }
 
 kapt {
