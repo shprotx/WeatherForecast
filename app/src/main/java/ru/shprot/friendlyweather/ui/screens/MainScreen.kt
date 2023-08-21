@@ -25,19 +25,15 @@ fun MainScreen(
 ) {
     val dialogState = remember { mutableStateOf(false) }
 
-    if (dialogState.value) JustDialogSearch(dialogState, onSubmit = {
-        dataProvider.getData(
-            it,
-            context,
-            viewModel.daysList,
-            viewModel.currentDay)
-    })
-
-    dataProvider.getData(
-        viewModel.selectedCity.value,
-        context,
-        viewModel.daysList,
-        viewModel.currentDay)
+    if (dialogState.value)
+        JustDialogSearch(dialogState, onSubmit = {
+            dataProvider.getData(
+                it,
+                context,
+                viewModel.daysList,
+                viewModel.currentDay,
+                successResult = {})
+        })
 
     Image(
         painter = painterResource(id = R.drawable.sky_bg),
@@ -52,7 +48,8 @@ fun MainScreen(
                 dataProvider.getData(
                     viewModel.selectedCity.value,
                     context, viewModel.daysList,
-                    viewModel.currentDay)
+                    viewModel.currentDay,
+                    successResult = {})
             },
             onClickSearch = {
                 dialogState.value = true

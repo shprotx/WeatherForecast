@@ -40,8 +40,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.shprot.friendlyweather.R
+import ru.shprot.friendlyweather.common.DataProvider
 import ru.shprot.friendlyweather.common.LocationDetector
-import ru.shprot.friendlyweather.common.logTag
 import ru.shprot.friendlyweather.viewModel.MainViewModel
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -50,36 +50,66 @@ fun SplashScreen(
     navController: NavController,
     viewModel: MainViewModel,
     context: Context,
+    defaultCity: String,
+    dataProvider: DataProvider
 ) {
     ShowSplashScreenUI()
 
-    val permissionState = rememberMultiplePermissionsState(permissions = listOf(
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION
-    ), onPermissionsResult = { permissionStateMap ->
-        if (!permissionStateMap.containsValue(false)) {
-            LocationDetector().getCurrentCity(context) { city ->
-                viewModel.selectedCity.value = city
-                openMainScreen(navController)
+    if (defaultCity.isNotEmpty()) {
+        dataProvider.getData(
+            defaultCity,
+            context,
+            viewModel.daysList,
+            viewModel.currentDay,
+            successResult = { openMainScreen(navController) }
+        )
+    } else {
+        val permissionState = rememberMultiplePermissionsState(permissions = listOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ), onPermissionsResult = { permissionStateMap ->
+            if (!permissionStateMap.containsValue(false)) {
+                determineCurrentCity(context, viewModel, navController, dataProvider)
+            } else {
+                dataProvider.getData(
+                    "Moscow",
+                    context,
+                    viewModel.daysList,
+                    viewModel.currentDay,
+                    successResult = { openMainScreen(navController) }
+                )
             }
-        } else {
-            viewModel.selectedCity.value = "Moscow"
-            openMainScreen(navController)
+        })
+
+        LaunchedEffect(permissionState) {
+            if (!permissionState.allPermissionsGranted)
+                permissionState.launchMultiplePermissionRequest()
+            else
+                determineCurrentCity(context, viewModel, navController, dataProvider)
         }
-    })
 
 
-    LaunchedEffect(permissionState) {
-        if (!permissionState.allPermissionsGranted)
-            permissionState.launchMultiplePermissionRequest()
     }
-
 
 }
 
 
-
-
+private fun determineCurrentCity(
+    context: Context,
+    viewModel: MainViewModel,
+    navController: NavController,
+    dataProvider: DataProvider
+) {
+    LocationDetector().getCurrentCity(context) { city ->
+        dataProvider.getData(
+            city,
+            context,
+            viewModel.daysList,
+            viewModel.currentDay,
+            successResult = { openMainScreen(navController) }
+        )
+    }
+}
 
 
 private fun openMainScreen(navController: NavController) {
@@ -88,10 +118,6 @@ private fun openMainScreen(navController: NavController) {
         navController.navigate("main_screen")
     }
 }
-
-
-
-
 
 
 @Composable
@@ -125,7 +151,7 @@ fun ShowSplashScreenUI() {
         ) {
             Column(
                 modifier = Modifier.width(200.dp)
-            ){
+            ) {
                 Box(
                     modifier = Modifier
                         .padding(20.dp)

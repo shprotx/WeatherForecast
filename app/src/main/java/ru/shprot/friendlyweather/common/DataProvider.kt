@@ -16,7 +16,8 @@ class DataProvider {
         city: String,
         context: Context,
         daysList: MutableState<List<WeatherModel>>,
-        currentDay: MutableState<WeatherModel>
+        currentDay: MutableState<WeatherModel>,
+        successResult: () -> Unit
     ) {
         val url = "https://api.weatherapi.com/v1/forecast.json?key=$apiKey" +
                 "&q=$city" +
@@ -32,6 +33,7 @@ class DataProvider {
                 val list = getWeatherByDays(response)
                 currentDay.value = list[0]
                 daysList.value = list
+                successResult()
             },
             {
                     error ->
