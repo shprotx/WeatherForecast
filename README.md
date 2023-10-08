@@ -27,6 +27,7 @@
 
 ## UI
 
-![photo_2023-10-08_15-32-06](https://github.com/shprotx/WeatherForecast/assets/59147207/e42d396e-c759-46a7-a7fb-4a0ddbc77e72)
-![photo_2023-10-08_15-32-10](https://github.com/shprotx/WeatherForecast/assets/59147207/f2b7ae03-82ac-4343-a5a9-7ec2a6af1c49)
-![photo_2023-10-08_15-32-23](https://github.com/shprotx/WeatherForecast/assets/59147207/91a28b51-4841-4da4-ac0d-99d5690b3c35)
+![photo_2023-10-08_15-32-06](https://github.com/shprotx/WeatherForecast/assets/59147207/8ec0e181-0fe1-4578-8202-8abca2319df6)
+![photo_2023-10-08_15-32-10](https://github.com/shprotx/WeatherForecast/assets/59147207/f35aa40e-a5aa-422e-81bf-6aa81ec2da5e)
+![photo_2023-10-08_15-32-23](https://github.com/shprotx/WeatherForecast/assets/59147207/39ce3c3b-178a-4615-b797-0fc4ef6504d9)
+
